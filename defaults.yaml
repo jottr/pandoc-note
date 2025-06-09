@@ -1,0 +1,52 @@
+pdf-engine: xelatex
+# template: template.tex  # Comment out custom template to use default
+highlight-style: tango
+toc-depth: 1
+
+# Variables for preventing page breaks and handling floats
+variables:
+  mainfont: "Helvetica Neue"
+  sansfont: "Helvetica Neue"
+  monofont: "Fira Code"
+  fontsize: 12pt
+  geometry: margin=1in
+  header-includes: |
+    \usepackage{needspace}
+    \usepackage{etoolbox}
+    \usepackage{graphicx}
+    \usepackage{adjustbox}
+    \usepackage{array}
+    \usepackage{longtable}
+    \usepackage{booktabs}
+
+    % Prevent page breaks after headings
+    \patchcmd{\section}{\@startsection}{\needspace{4\baselineskip}\@startsection}{}{}
+    \patchcmd{\subsection}{\@startsection}{\needspace{3\baselineskip}\@startsection}{}{}
+    \patchcmd{\subsubsection}{\@startsection}{\needspace{2\baselineskip}\@startsection}{}{}
+    \clubpenalty=10000
+    \widowpenalty=10000
+    \displaywidowpenalty=10000
+
+    % Float handling
+    \renewcommand{\topfraction}{0.9}
+    \renewcommand{\bottomfraction}{0.8}
+    \setcounter{topnumber}{2}
+    \setcounter{bottomnumber}{2}
+    \setcounter{totalnumber}{4}
+    \setcounter{dbltopnumber}{2}
+    \renewcommand{\dbltopfraction}{0.9}
+    \renewcommand{\textfraction}{0.07}
+    \renewcommand{\floatpagefraction}{0.7}
+    \renewcommand{\dblfloatpagefraction}{0.7}
+
+    % Auto-resize images that are too large  
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+    \def\maxheight{\ifdim\Gin@nat@height>0.8\textheight 0.8\textheight\else\Gin@nat@height\fi}
+    \makeatother
+
+    % Set default image scaling - all images max 80% of text width
+    \setkeys{Gin}{width=0.8\linewidth,keepaspectratio}
+
+    % Increase padding between table rows
+    \renewcommand{\arraystretch}{1.5}

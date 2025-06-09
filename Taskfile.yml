@@ -1,0 +1,15 @@
+version: '3'
+
+tasks:
+  generate-pdf:
+    desc: Generate PDF from markdown file (defaults to note.md)
+    vars:
+      INPUT_FILE: '{{.CLI_ARGS | default "note.md"}}'
+      OUTPUT_FILE: '{{.INPUT_FILE | replace ".md" ".pdf"}}'
+    cmds:
+      - echo "Processing{{":"}} {{.INPUT_FILE}}"
+      - pandoc "{{.INPUT_FILE}}" --defaults defaults.yaml -o "{{.OUTPUT_FILE}}"
+      - echo "Generated{{":"}} {{.OUTPUT_FILE}}"
+
+  default:
+    deps: [generate-pdf] 
